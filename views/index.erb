@@ -1,0 +1,30 @@
+<html>
+  <body>
+    <h1>Convox Example: Sinatra and Redis</h1>
+
+    <h2>Messages</h2>
+    <table border=1 cellspacing=0 cellpadding=8>
+      <thead>
+        <tr>
+          <th>Text</th>
+          <th>Date</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% messages.each do |message| %>
+          <tr>
+            <td><%= message['text'] %></td>
+            <td><%= message['created_at'] %></td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+
+    <br/>
+
+    <form method="post" action="/message">
+      <input type="text" name="text" value="">
+      <input type="submit" value="Post Message">
+    </form>
+  </body>
+</html>

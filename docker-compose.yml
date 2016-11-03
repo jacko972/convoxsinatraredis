@@ -1,0 +1,23 @@
+web:
+  build: .
+  command: bin/web
+  environment:
+    - RACK_ENV=development
+  labels:
+    - convox.port.443.protocol=tls
+  ports:
+    - 80:3000
+    - 443:3000
+  links:
+    - redis
+worker:
+  build: .
+  command: bin/worker
+  environment:
+    - RACK_ENV=development
+  links:
+    - redis
+redis:
+  image: convox/redis
+  ports:
+    - 6379
