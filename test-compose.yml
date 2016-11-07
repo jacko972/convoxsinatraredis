@@ -28,10 +28,10 @@ worker:
     - foobar.role=worker
     - foobar.purpose=test
     - convox.deployment.minimum=100
-redis:
-  image: convox/redis
-  ports:
-    - 6379
-  labels:
-    - foobar.role=db
-    - foobar.purpose=test
+# redis:
+#   image: convox/redis
+#   ports:
+#     - 6379
+#   labels:
+#     - foobar.role=db
+#     - foobar.purpose=test
