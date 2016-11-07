@@ -1,4 +1,4 @@
-web:
+webapp:
   build: .
   command: bin/web
   environment:
