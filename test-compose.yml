@@ -3,13 +3,14 @@ webapp:
   command: bin/web
   environment:
     - RACK_ENV=development
+  mem_limit: 100m
   labels:
     - convox.port.443.protocol=tls
   ports:
     - 80:3000
     - 443:3000
   links:
-    - redis
+    - cache
   labels:
     - foobar.role=web
     - foobar.purpose=test
@@ -22,16 +23,10 @@ worker:
   command: bin/worker
   environment:
     - RACK_ENV=development
+  mem_limit: 100m
   links:
-    - redis
+    - cache
   labels:
     - foobar.role=worker
     - foobar.purpose=test
     - convox.deployment.minimum=100
-# redis:
-#   image: convox/redis
-#   ports:
-#     - 6379
-#   labels:
-#     - foobar.role=db
-#     - foobar.purpose=test
