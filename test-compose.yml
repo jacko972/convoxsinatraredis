@@ -9,8 +9,6 @@ webapp:
   ports:
     - 80:3000
     - 443:3000
-  links:
-    - cache
   labels:
     - foobar.role=web
     - foobar.purpose=test
@@ -24,8 +22,6 @@ worker:
   environment:
     - RACK_ENV=development
   mem_limit: 100m
-  links:
-    - cache
   labels:
     - foobar.role=worker
     - foobar.purpose=test
