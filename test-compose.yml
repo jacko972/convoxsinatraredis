@@ -4,6 +4,7 @@ webapp:
   environment:
     - RACK_ENV=development
   mem_limit: 100m
+  count: 1
   labels:
     - convox.port.443.protocol=tls
   ports:
@@ -22,6 +23,7 @@ worker:
   environment:
     - RACK_ENV=development
   mem_limit: 100m
+  count: 2
   labels:
     - foobar.role=worker
     - foobar.purpose=test
