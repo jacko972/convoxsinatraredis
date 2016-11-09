@@ -30,3 +30,7 @@ worker:
     - foobar.role=worker
     - foobar.purpose=dev
     - convox.deployment.minimum=100
+cache:
+  image: convox/redis
+  ports:
+    - 6379
