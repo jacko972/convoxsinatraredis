@@ -22,16 +22,16 @@ class Web < Sinatra::Base
   get '/' do
     msgs = RedisClient.lrange(MESSAGES, 0, -1)
     puts "connected at #{ENV['CACHE_URL']} - there are #{msgs.count} messages"
-    msgs.map do |m|
+    pmsgs = msgs.map do |m|
       begin
         puts m
         JSON.parse(m)
-      rescue StaneardError => e
+      rescue StandardError => e
         { text: "error: #{e}", error: 1 }
       end
     end
-    puts "messages retrieved: #{msgs}"
-    erb :index, locals: { messages: msgs }
+    puts "messages retrieved: #{pmsgs}"
+    erb :index, locals: { messages: pmsgs }
   end
 
   get '/check' do
