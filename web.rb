@@ -36,7 +36,8 @@ class Web < Sinatra::Base
 
   get '/check' do
     fmt = 'OK : %s connected at %s'
-    format(fmt, APP_NAME, ENV['CACHE_URL'])
+    puts(format(fmt, APP_NAME, ENV['CACHE_URL']))
+    'OK'
   end
 
   post '/message' do
