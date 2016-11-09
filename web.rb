@@ -5,10 +5,11 @@ require 'sinatra/base'
 require 'sinatra/reloader'
 require 'json'
 
-RedisClient = Redis.new(url: ENV['REDIS_URL'])
+RedisClient = Redis.new(url: ENV['CACHE_URL'])
 
 QUEUE = 'convox.queue'
 MESSAGES = 'convox.messages'
+APP_NAME = 'webapp'
 
 # Web < Sinatra::Base
 class Web < Sinatra::Base
@@ -20,12 +21,12 @@ class Web < Sinatra::Base
 
   get '/' do
     msgs = RedisClient.lrange(MESSAGES, 0, -1)
-    puts "there are #{msgs.count} messages"
+    puts "connected at #{ENV['CACHE_URL']} - there are #{msgs.count} messages"
     msgs.map do |m|
       begin
         puts m
         JSON.parse(m)
-      rescue StandardError => e
+      rescue StaneardError => e
         { text: "error: #{e}", error: 1 }
       end
     end
@@ -34,11 +35,13 @@ class Web < Sinatra::Base
   end
 
   get '/check' do
-    'ok'
+    fmt = 'OK : %s connected at %s'
+    format(fmt, APP_NAME, ENV['CACHE_URL'])
   end
 
   post '/message' do
-    puts "message received: #{params.inspect} and pushing into #{QUEUE}"
+    fmt = 'message received: %s and pushing into %s:%s'
+    puts(format(fmt, params, ENV['CACHE_URL'], QUEUE))
     RedisClient.lpush(QUEUE, params['text'])
     redirect to('/')
   end
