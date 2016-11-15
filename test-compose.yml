@@ -4,16 +4,15 @@ webapp:
   environment:
     - RACK_ENV=development
   mem_limit: 100m
+  count: 1
   labels:
     - convox.port.443.protocol=tls
   ports:
     - 80:3000
     - 443:3000
-  links:
-    - cache
   labels:
     - foobar.role=web
-    - foobar.purpose=dev
+    - foobar.purpose=test
     - convox.health.timeout=5
     - convox.deployment.minimum=50
     - convox.deployment.maximum=100
@@ -21,16 +20,11 @@ webapp:
 worker:
   build: .
   command: bin/worker
-  mem_limit: 100m
   environment:
     - RACK_ENV=development
-  links:
-    - cache
+  mem_limit: 100m
+  count: 2
   labels:
     - foobar.role=worker
-    - foobar.purpose=dev
+    - foobar.purpose=test
     - convox.deployment.minimum=100
-cache:
-  image: convox/redis
-  ports:
-    - 6379
