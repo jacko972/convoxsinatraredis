@@ -1,7 +1,7 @@
 #!/bin/sh
 
 echo "waiting for database"
-echo "Redis is on ${REDIS_URL}"
+echo "Redis is on ${CACHE_URL}"
 sleep 1
 
 unicorn -c unicorn.rb
